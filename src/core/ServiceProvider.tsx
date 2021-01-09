@@ -6,6 +6,8 @@ const dependencies = {
   signed: false,
 };
 
+type TDependencies = typeof dependencies;
+
 const DepContext = React.createContext(dependencies);
 
 export const AuthProvider: React.FC = ({ children }) => {
@@ -14,7 +16,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const subscription = auth.subscribeToAuthChange(setSignedIn);
 
-    return auth.unsubscribeToAuthChange(subscription);
+    return () => auth.unsubscribeToAuthChange(subscription);
   }, []);
 
   return (
@@ -24,7 +26,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
-export const useGetDep = (key: keyof typeof dependencies) => {
+export const useGetDep = <K extends keyof TDependencies>(
+  key: K
+): TDependencies[K] => {
   const container = useContext(DepContext);
   return container[key];
 };
