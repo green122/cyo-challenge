@@ -1,8 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { signInWithEmailAndPassword } from "./services/auth.service";
 
 function App() {
+  signInWithEmailAndPassword(
+    "coding-challenge@construyo.de",
+    "coding-challenge@construyo.de"
+  );
   return (
     <div className="App">
       <header className="App-header">
