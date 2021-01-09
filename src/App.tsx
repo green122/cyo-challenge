@@ -1,6 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { signInWithEmailAndPassword } from "./services/auth.service";
+import { AuthProvider } from "./core/ServiceProvider";
+import React from "react";
+import { Login } from "./components/Login/Login";
 
 function App() {
   signInWithEmailAndPassword(
@@ -8,22 +10,9 @@ function App() {
     "coding-challenge@construyo.de"
   );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Login />
+    </AuthProvider>
   );
 }
 

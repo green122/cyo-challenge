@@ -6,15 +6,6 @@ import FIREBASE_CONFIG from "../firebaseConfig";
 const LOCAL_STORAGE_KEY = "x-access-token";
 
 firebase.initializeApp(FIREBASE_CONFIG);
-firebase.auth().onAuthStateChanged(async (user) => {
-  if (!user) {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
-    return;
-  }
-
-  const token = await user.getIdToken();
-  localStorage.setItem(LOCAL_STORAGE_KEY, token);
-});
 
 export async function signInWithEmailAndPassword(
   email: string,
@@ -29,4 +20,31 @@ export async function signInWithEmailAndPassword(
     console.log(error.code);
     console.log(error.message);
   }
+}
+
+export function getAuthToken() {
+  return localStorage.getItem(LOCAL_STORAGE_KEY);
+}
+
+export function isSignedIn() {
+  return Boolean(getAuthToken());
+}
+
+export function subscribeToAuthChange(cb: (isSigned: boolean) => void) {
+  const listener = firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      cb(false);
+      return;
+    }
+
+    const token = await user.getIdToken();
+    localStorage.setItem(LOCAL_STORAGE_KEY, token);
+    cb(true);
+  });
+  return listener;
+}
+
+export function unsubscribeToAuthChange(listener: firebase.Unsubscribe) {
+  listener();
 }
