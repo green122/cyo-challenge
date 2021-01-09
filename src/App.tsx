@@ -2,7 +2,8 @@ import "./App.css";
 import { signInWithEmailAndPassword } from "./services/auth.service";
 import { AuthProvider } from "./core/ServiceProvider";
 import React from "react";
-import { Login } from "./components/Login/Login";
+import { BrowserRouter } from "react-router-dom";
+import { Routes } from "./core/Routes";
 
 function App() {
   signInWithEmailAndPassword(
@@ -11,7 +12,9 @@ function App() {
   );
   return (
     <AuthProvider>
-      <Login />
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </AuthProvider>
   );
 }
