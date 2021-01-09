@@ -17,6 +17,7 @@ export async function signInWithEmailAndPassword(
       .signInWithEmailAndPassword(email, password);
     return user;
   } catch (error) {
+    //TODO : improve error handling
     console.log(error.code);
     console.log(error.message);
   }
