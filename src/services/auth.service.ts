@@ -11,16 +11,10 @@ export async function signInWithEmailAndPassword(
   email: string,
   password: string
 ) {
-  try {
-    const user = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-    return user;
-  } catch (error) {
-    //TODO : improve error handling
-    console.log(error.code);
-    console.log(error.message);
-  }
+  const user = await firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password);
+  return user;
 }
 
 export function getAuthToken() {
