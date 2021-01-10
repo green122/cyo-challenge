@@ -23,6 +23,13 @@ export function apiClient() {
     }
   );
 
+  instance.interceptors.response.use(
+    (resp) => resp,
+    (error) => {
+      throw error?.response?.data || error;
+    }
+  );
+
   axiosClient = instance;
   return instance;
 }

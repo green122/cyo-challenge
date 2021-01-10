@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin, Alert } from "antd";
 import { fetchOrderById, updateOrderById } from "../../api/fetchers";
 import {
   useFetching,
@@ -11,7 +11,7 @@ import { OrderDetailsForm, OrderFormData } from "./OrderDetailsForm";
 export const OrderDetails: React.FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
 
-  const { data: order, isLoading } = useFetching(
+  const { data: order, isLoading, error } = useFetching(
     ["order", orderId],
     fetchOrderById,
     [orderId]
@@ -21,13 +21,11 @@ export const OrderDetails: React.FC = () => {
 
   const handler = (data: OrderFormData) => updateOrder(orderId, data);
 
-  if (!order) {
-    return null;
-  }
-
-  if (isLoading) {
-    return <Spin size="large" />;
-  }
-
-  return <OrderDetailsForm order={order} onSubmit={handler} />;
+  return (
+    <>
+      {isLoading && <Spin size="large" />}
+      {error && <Alert message={error.message} type="error" />}
+      {order && <OrderDetailsForm order={order} onSubmit={handler} />}
+    </>
+  );
 };
