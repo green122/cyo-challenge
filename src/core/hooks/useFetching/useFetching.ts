@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer } from "react";
 import { AxiosError, AxiosResponse } from "axios";
-import { getCachedData, storeCachedData } from "./caching";
+import { clearCache, getCachedData, storeCachedData } from "./caching";
 
 export type RequestBody = any;
 
@@ -19,15 +19,14 @@ interface IFetchState<T> {
 
 interface IResult<T> {
   state: IFetchState<T>;
-  start: (requestBody?: RequestBody) => Promise<T | null>;
+  // TODO: make args autoinferrable from the request action to more type safety
+  start: (...args: any[]) => Promise<T | null>;
   cancel: () => void;
 }
 
 export type Response<T> = AxiosResponse<T>;
 
-export type RequestAction<T = unknown> = (
-  requestPayload?: RequestBody
-) => Promise<T>;
+export type RequestAction<T = unknown> = (...args: any[]) => Promise<T>;
 
 type Action<T> =
   | {
@@ -68,7 +67,18 @@ const dataFetchReducer = <T>() => (
   }
 };
 
-function useBaseFetching<T = unknown>(action: RequestAction<T>): IResult<T> {
+interface FetchingOptions {
+  invalidateCache?: boolean;
+}
+
+function useBaseFetching<T = unknown>(
+  action: RequestAction<T>,
+  options?: FetchingOptions
+): IResult<T> {
+  if (options?.invalidateCache) {
+    clearCache();
+  }
+
   const [state, dispatch] = useReducer(dataFetchReducer<T>(), initialState);
 
   const fetchData = useCallback(
@@ -91,8 +101,8 @@ function useBaseFetching<T = unknown>(action: RequestAction<T>): IResult<T> {
   );
 
   const start = useCallback(
-    (requestBody: RequestBody) => {
-      const promise = action(requestBody);
+    (...args) => {
+      const promise = action(...args);
       return fetchData(promise);
     },
     // eslint-disable-next-line
@@ -125,7 +135,8 @@ export function useFetching<T>(
   }, [start, cancel, ...deps]);
   return data ? { ...state, data } : state;
 }
-
+// TODO: add possibility to cache data only for get requests
 export function useLazyFetching<T>(action: RequestAction<T>): IResult<T> {
-  return useBaseFetching<T>(action);
+  // TODO: make invalidation optional
+  return useBaseFetching<T>(action, { invalidateCache: true });
 }

@@ -14,3 +14,14 @@ export const fetchOrderById = async (orderId: string) => {
   );
   return response.data;
 };
+
+export const updateOrderById = async (
+  orderId: string,
+  updateData: Partial<OrderDto>
+) => {
+  const response = await apiClient().put<Partial<OrderDto>>(
+    `http://localhost:4400/orders/${orderId}`,
+    updateData
+  );
+  return response.data;
+};

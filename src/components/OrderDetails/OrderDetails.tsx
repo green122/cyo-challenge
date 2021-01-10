@@ -1,7 +1,10 @@
 import { useParams } from "react-router-dom";
 import { Spin } from "antd";
-import { fetchOrderById } from "../../api/fetchers";
-import { useFetching } from "../../core/hooks/useFetching/useFetching";
+import { fetchOrderById, updateOrderById } from "../../api/fetchers";
+import {
+  useFetching,
+  useLazyFetching,
+} from "../../core/hooks/useFetching/useFetching";
 import React from "react";
 import { OrderDetailsForm, OrderFormData } from "./OrderDetailsForm";
 
@@ -14,7 +17,9 @@ export const OrderDetails: React.FC = () => {
     [orderId]
   );
 
-  const handler = (data: OrderFormData) => console.log(data);
+  const { start: updateOrder } = useLazyFetching(updateOrderById);
+
+  const handler = (data: OrderFormData) => updateOrder(orderId, data);
 
   if (!order) {
     return null;

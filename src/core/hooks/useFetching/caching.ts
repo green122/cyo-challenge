@@ -7,7 +7,7 @@ interface CachedData {
   data: any;
   timestamp: number;
 }
-const simpleCache = new Map<string, CachedData>();
+let simpleCache = new Map<string, CachedData>();
 
 function serializator(key: CacheKey): string {
   return Array.isArray(key) ? key.join("-") : key;
@@ -35,4 +35,8 @@ export function storeCachedData(key: CacheKey, data: any) {
     simpleCache.delete(firstKey);
   }
   simpleCache.set(serializator(key), { data, timestamp: Date.now() });
+}
+
+export function clearCache() {
+  simpleCache = new Map<string, CachedData>();
 }
