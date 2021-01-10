@@ -2,7 +2,15 @@ import React from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import { useGetIsSignedIn } from "../../core/ServiceProvider";
 
-export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
+type PrivateRouteProps = RouteProps & {
+  loginRoute?: string;
+};
+
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  children,
+  loginRoute = "/login",
+  ...rest
+}) => {
   let isSignedIn = useGetIsSignedIn();
   return (
     <Route
@@ -13,7 +21,7 @@ export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: loginRoute,
               state: { from: location },
             }}
           />
