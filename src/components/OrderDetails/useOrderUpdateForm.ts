@@ -1,17 +1,12 @@
 import { useForm } from "react-hook-form";
-import { convertMillisecondsToDate } from "../../core/utils/date";
 import { OrderDto } from "../../types/api";
+import { OrderFormData } from "./OrderDetailsForm";
 import { useCheckIsDirty } from "./useCheckIsDirty";
 
-type FormData = {
-  title: string;
-  bookingDate: string;
-};
-
 export const useOrderUpdateForm = (order: OrderDto | null) => {
-  const defaultValues: FormData = {
+  const defaultValues: OrderFormData = {
     title: order?.title || "",
-    bookingDate: order ? convertMillisecondsToDate(order.bookingDate) : "",
+    bookingDate: order ? order.bookingDate : Date.now(),
   };
   const { dirty, setValueToCheck } = useCheckIsDirty(defaultValues);
 
@@ -21,7 +16,8 @@ export const useOrderUpdateForm = (order: OrderDto | null) => {
     errors,
     getValues,
     control,
-  } = useForm<FormData>({
+  } = useForm<OrderFormData>({
+    defaultValues,
     mode: "onChange",
   });
 
