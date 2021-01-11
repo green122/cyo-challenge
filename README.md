@@ -1,3 +1,11 @@
+# Installation
+
+### `yarn`
+
+## Credentials
+
+`file firebaseConfig.js should be added at src directory`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
