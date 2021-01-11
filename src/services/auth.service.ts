@@ -43,3 +43,7 @@ export function subscribeToAuthChange(cb: (isSigned: boolean) => void) {
 export function unsubscribeToAuthChange(listener: firebase.Unsubscribe) {
   listener();
 }
+
+export async function signOut() {
+  await firebase.auth().signOut();
+}
