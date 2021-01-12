@@ -29,5 +29,5 @@ export const useCheckIsDirty = <T extends FormFieldsType>(
     if (dirty !== isDirty) setIsDirty(isDirty);
   };
 
-  return { dirty, setValueToCheck };
+  return { dirty, setValueToCheck, setIsDirty };
 };

@@ -4,7 +4,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import styled from "styled-components";
 import { OrderDto } from "../../types/api";
-import DatePickerV2 from "../DatePickerV2/DatePickerV2";
+import DatePickerV2 from "../../components/DatePickerV2/DatePickerV2";
 import { useOrderUpdateForm } from "./useOrderUpdateForm";
 
 const ButtonContainer = styled.div`
@@ -39,6 +39,9 @@ export const OrderDetailsForm: React.FC<OrderDetailsProps> = ({
     onSubmit({ title, bookingDate });
   });
 
+  const parsedDate = dayjs(Date.now());
+  const dateDefaultValue = parsedDate.isValid() ? parsedDate : dayjs();
+
   return (
     <form onSubmit={submitHandler}>
       <Descriptions
@@ -61,7 +64,7 @@ export const OrderDetailsForm: React.FC<OrderDetailsProps> = ({
           <Controller
             name="bookingDate"
             control={control}
-            defaultValue={dayjs(order.bookingDate)}
+            defaultValue={dateDefaultValue}
             render={(props) => (
               <DatePickerV2
                 data-testid="date"

@@ -75,10 +75,6 @@ function useBaseFetching<T = unknown>(
   action: RequestAction<T>,
   options?: FetchingOptions
 ): IResult<T> {
-  if (options?.invalidateCache) {
-    clearCache();
-  }
-
   const [state, dispatch] = useReducer(dataFetchReducer<T>(), initialState);
 
   const fetchData = useCallback(
@@ -102,6 +98,9 @@ function useBaseFetching<T = unknown>(
 
   const start = useCallback(
     (...args) => {
+      if (options?.invalidateCache) {
+        clearCache();
+      }
       const promise = action(...args);
       return fetchData(promise);
     },

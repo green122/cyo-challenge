@@ -1,9 +1,9 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { Login } from "../components/Login/Login";
+import { Login } from "../scenes/Login/Login";
 import { NoMatch } from "../components/NoMatch/NoMatch";
-import { OrderDetails } from "../components/OrderDetails/OrderDetails";
-import { Orders } from "../components/Orders/Orders";
+import { OrderDetails } from "../scenes/OrderDetails/OrderDetails";
+import { Orders } from "../scenes/Orders/Orders";
 import { PrivateRoute } from "../components/PrivateRoute/PrivateRoute";
 
 export const Routes: React.FC = () => (

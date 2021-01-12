@@ -4,7 +4,7 @@ import { ColumnType } from "antd/lib/table/interface";
 import { useHistory } from "react-router-dom";
 import { fetchOrders } from "../../api/fetchers";
 import { useFetching } from "../../core/hooks/useFetching/useFetching";
-import { convertMillisecondsToDate } from "../../core/utils/date";
+import { convertMillisecondsToDateString } from "../../core/utils/date";
 import { OrderDto } from "../../types/api";
 import { SceneContainer, StyledSpinner } from "../../core/components/common";
 
@@ -18,7 +18,7 @@ const columns: ColumnType<OrderDto>[] = [
     title: "Booking Date",
     dataIndex: "bookingDate",
     key: "bookingDate",
-    render: convertMillisecondsToDate,
+    render: convertMillisecondsToDateString,
   },
   {
     title: "Address",
