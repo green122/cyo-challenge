@@ -7,6 +7,9 @@ const LOCAL_STORAGE_KEY = "x-access-token";
 
 firebase.initializeApp(FIREBASE_CONFIG);
 
+/*  TODO: implement refresh token flow. We need to add some implementation 
+    in the apiClient and probably some functions here */
+
 export async function signInWithEmailAndPassword(
   email: string,
   password: string
@@ -17,11 +20,11 @@ export async function signInWithEmailAndPassword(
   return user;
 }
 
-export function getAuthToken() {
+export function getAuthToken(): string | null {
   return localStorage.getItem(LOCAL_STORAGE_KEY);
 }
 
-export function isSignedIn() {
+export function isSignedIn(): boolean {
   return Boolean(getAuthToken());
 }
 

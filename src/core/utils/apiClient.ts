@@ -1,8 +1,11 @@
 import axios, { AxiosInstance } from "axios";
 import { getAuthToken } from "../../services/auth.service";
 
-// TODO: Probably we should write it in more generic way to have an opportunity
-// to replace Axios with another library or native fetch
+/* TODO: Probably we should write it in more generic way to have an opportunity
+ to replace Axios with another library or native fetch
+
+ Also we need to implement expiring token case handling */
+
 type APIClient = AxiosInstance;
 let axiosClient: AxiosInstance;
 
