@@ -6,19 +6,14 @@ import styled from "styled-components";
 import { OrderDto } from "../../types/api";
 import DatePickerV2 from "../../components/DatePickerV2/DatePickerV2";
 import { useOrderUpdateForm } from "./useOrderUpdateForm";
+import { UpdateOrderData } from "../../types/common";
 
 const ButtonContainer = styled.div`
   margin-top: 12px;
 `;
-
-export type OrderFormData = {
-  title: string;
-  bookingDate: number;
-};
-
 interface OrderDetailsProps {
   order: OrderDto;
-  onSubmit(data: OrderFormData): void;
+  onSubmit(data: UpdateOrderData): void;
   isUpdating: boolean;
 }
 
@@ -33,6 +28,8 @@ export const OrderDetailsForm: React.FC<OrderDetailsProps> = ({
     checkOnChange,
     dirty,
     control,
+    errors,
+    isValid,
   } = useOrderUpdateForm(order);
 
   const submitHandler = handleSubmit(({ title, bookingDate }) => {
@@ -42,6 +39,7 @@ export const OrderDetailsForm: React.FC<OrderDetailsProps> = ({
   const parsedDate = dayjs(Date.now());
   const dateDefaultValue = parsedDate.isValid() ? parsedDate : dayjs();
 
+  // TODO: improve form's error notifications
   return (
     <form onSubmit={submitHandler}>
       <Descriptions
@@ -59,7 +57,10 @@ export const OrderDetailsForm: React.FC<OrderDetailsProps> = ({
             ref={register({ required: true })}
             defaultValue={order.title}
           />
+          {errors.title && <div>This field shouldn't be empty</div>}
         </Descriptions.Item>
+        {/* TODO: Now if input data is incorrect - we handle it as the current data. And we dont handle clear field button.
+        Probably we should think about it */}
         <Descriptions.Item label="Booking Date">
           <Controller
             name="bookingDate"
@@ -94,7 +95,7 @@ export const OrderDetailsForm: React.FC<OrderDetailsProps> = ({
         <Button
           data-testid="submit"
           htmlType="submit"
-          disabled={!dirty}
+          disabled={!dirty || !isValid}
           loading={isUpdating}
         >
           Update Order

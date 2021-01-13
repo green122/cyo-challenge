@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { useGetIsSignedIn } from "../../core/ServiceProvider";
+import { useGetIsSignedIn } from "../../core/AuthProvider";
 
 type PrivateRouteProps = RouteProps & {
   loginRoute?: string;

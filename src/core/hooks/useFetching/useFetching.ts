@@ -19,7 +19,7 @@ interface IFetchState<T> {
 
 interface IResult<T> {
   state: IFetchState<T>;
-  // TODO: make args autoinferrable from the request action to more type safety
+  // TODO: make args autoinferrable from the request action for more type safety
   start: (...args: any[]) => Promise<T | null>;
   cancel: () => void;
 }

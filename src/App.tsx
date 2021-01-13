@@ -1,19 +1,19 @@
 import "./App.css";
-import { AuthProvider } from "./core/ServiceProvider";
+import { AuthProvider } from "./core/AuthProvider";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Routes } from "./core/Routes";
 import { Header } from "./components/Header/Header";
-import { SceneContainer } from "./core/components/common";
+import { StyledContainer } from "./core/components/common";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Header />
-        <SceneContainer>
+        <StyledContainer>
           <Routes />
-        </SceneContainer>
+        </StyledContainer>
       </BrowserRouter>
     </AuthProvider>
   );

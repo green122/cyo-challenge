@@ -1,9 +1,12 @@
 import axios, { AxiosInstance } from "axios";
 import { getAuthToken } from "../../services/auth.service";
 
+// TODO: Probably we should write it in more generic way to have an opportunity
+// to replace Axios with another library or native fetch
+type APIClient = AxiosInstance;
 let axiosClient: AxiosInstance;
 
-export function apiClient() {
+export function apiClient(): APIClient {
   if (axiosClient) {
     return axiosClient;
   }

@@ -6,7 +6,7 @@ import { fetchOrders } from "../../api/fetchers";
 import { useFetching } from "../../core/hooks/useFetching/useFetching";
 import { convertMillisecondsToDateString } from "../../core/utils/date";
 import { OrderDto } from "../../types/api";
-import { SceneContainer, StyledSpinner } from "../../core/components/common";
+import { StyledContainer, StyledSpinner } from "../../core/components/common";
 
 const columns: ColumnType<OrderDto>[] = [
   {
@@ -29,6 +29,8 @@ const columns: ColumnType<OrderDto>[] = [
     title: "Customer",
     dataIndex: ["customer", "name"],
     key: "customer",
+    // Show this column only on the wide screens to keep responsiveness
+    responsive: ["lg", "md"],
   },
 ];
 
@@ -39,7 +41,7 @@ export const Orders: React.FC = () => {
   const onRowClick = (order: OrderDto) => history.push(`orders/${order.id}`);
 
   return (
-    <SceneContainer>
+    <StyledContainer>
       {isLoading && <StyledSpinner size="large" />}
       {error && <Alert message={error.message} type="error" />}
       {data && (
@@ -54,6 +56,6 @@ export const Orders: React.FC = () => {
           })}
         />
       )}
-    </SceneContainer>
+    </StyledContainer>
   );
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { useGetDep, useGetIsSignedIn } from "../../core/ServiceProvider";
+import { useGetDep, useGetIsSignedIn } from "../../core/AuthProvider";
 import { IRouteState } from "../../types/common";
 
 export function useLogin() {

@@ -2,6 +2,7 @@ import { Button } from "antd";
 import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { removeExtraSpaces } from "../../core/utils/replaceExtraSpaces";
 import { useLogin } from "./useLogin";
 
 const ButtonContainer = styled.div`
@@ -22,7 +23,7 @@ export const Login: React.FC = () => {
 
   const { register, handleSubmit, errors } = useForm<FormData>();
   const onSubmit = handleSubmit(({ email, password }) => {
-    signIn(email.replace(/\s/g, ""), password.replace(/\s/g, ""));
+    signIn(removeExtraSpaces(email), removeExtraSpaces(password));
   });
 
   return (

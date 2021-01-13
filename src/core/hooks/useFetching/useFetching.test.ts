@@ -23,7 +23,7 @@ describe("useFetching hook", () => {
     );
   });
 
-  it("should return isLoading flat set to true, then error from promise", async () => {
+  it("should return isLoading flag set to true, then error from promise", async () => {
     const { result, waitForNextUpdate } = renderHook(() =>
       useFetching("key", () => Promise.reject(new Error("some error")))
     );

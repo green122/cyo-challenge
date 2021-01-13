@@ -2,7 +2,7 @@ import { PageHeader, Button } from "antd";
 import React from "react";
 import styled from "styled-components";
 import { StyledLink } from "../../core/components/common";
-import { useGetIsSignedIn } from "../../core/ServiceProvider";
+import { useGetIsSignedIn } from "../../core/AuthProvider";
 import { signOut } from "../../services/auth.service";
 
 const StyledPageHeader = styled(PageHeader)`

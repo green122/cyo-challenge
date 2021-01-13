@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { isValidDate, validateDate } from "../../core/utils/date";
 import { OrderDto } from "../../types/api";
-import { OrderFormData } from "./OrderDetailsForm";
+import { UpdateOrderData } from "../../types/common";
 import { useCheckIsDirty } from "./useCheckIsDirty";
 
 export const useOrderUpdateForm = (order: OrderDto | null) => {
-  const defaultValues: OrderFormData = {
+  const defaultValues: UpdateOrderData = {
     title: order?.title || "",
     bookingDate: validateDate(order?.bookingDate),
   };
@@ -30,7 +30,8 @@ export const useOrderUpdateForm = (order: OrderDto | null) => {
     errors,
     getValues,
     control,
-  } = useForm<OrderFormData>({
+    formState,
+  } = useForm<UpdateOrderData>({
     defaultValues,
     mode: "onChange",
   });
@@ -46,5 +47,6 @@ export const useOrderUpdateForm = (order: OrderDto | null) => {
     control,
     checkOnChange,
     dirty,
+    isValid: formState.isValid,
   };
 };

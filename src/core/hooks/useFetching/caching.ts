@@ -29,7 +29,7 @@ export function getCachedData(key: CacheKey) {
   return cachedData.data;
 }
 
-export function storeCachedData(key: CacheKey, data: any) {
+export function storeCachedData(key: CacheKey, data: any): void {
   if (simpleCache.size > maxSize) {
     const firstKey = simpleCache.keys().next().value;
     simpleCache.delete(firstKey);
@@ -37,6 +37,6 @@ export function storeCachedData(key: CacheKey, data: any) {
   simpleCache.set(serializator(key), { data, timestamp: Date.now() });
 }
 
-export function clearCache() {
+export function clearCache(): void {
   simpleCache = new Map<string, CachedData>();
 }

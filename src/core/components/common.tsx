@@ -2,9 +2,13 @@ import { Spin } from "antd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const SceneContainer = styled.div`
+export const StyledContainer = styled.div`
   width: 800px;
   margin: 50px auto;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 export const StyledSpinner = styled(Spin)`
